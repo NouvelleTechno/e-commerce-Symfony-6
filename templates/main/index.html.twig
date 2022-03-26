@@ -1,6 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Site e-commerce</h1>
-    <p>Bienvenue dans notre boutique</p>
+    <main class="container">
+        <section class="row">
+            <div class="col-12">
+                <h1>Site e-commerce</h1>
+                <p>Bienvenue dans notre boutique</p>            
+            </div>
+            {% for category in categories %}
+                {% if category.parent == null %}
+                    <div class="col-12">
+                        <h2>{{ category.name }}</h2>
+                    </div>
+                {% else %}
+                    <div class="col-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h3 class="card-title">{{ category.name }}</h3>
+                                <a href="{{ path('categories_list', {slug: category.slug}) }}" class="btn btn-primary">Voir les produits</a>
+                            </div>
+                        </div>
+                    </div>    
+                {% endif %}
+            {% endfor %}
+        </section>
+    </main>
 {% endblock %}
