@@ -8,7 +8,7 @@
             <div class="col-12">
                 <h1>Liste des produits de la catégorie {{ category.name }}</h1>
             </div>
-            {% for product in products %}
+            {% for product in products.data %}
                 <div class="col-3 mb-3">
                     <article class="card h-100">
                         <div class="card-body">
@@ -19,6 +19,11 @@
                     </article>
                 </div>
             {% endfor %}
+            {% set path = 'categories_list' %}
+            {% set slug = category.slug %}
+            {% set pages = products.pages %}
+            {% set currentPage = products.page %}
+            {% include "_partials/_pagination.html.twig" %}
         </section>
     </main>
 {% endblock %}
