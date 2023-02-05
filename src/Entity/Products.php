@@ -8,6 +8,7 @@ use App\Repository\ProductsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductsRepository::class)]
 class Products
@@ -21,6 +22,13 @@ class Products
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'Le nom du produit ne peut pas être vide')]
+    #[Assert\Length(
+        min: 8,
+        max: 200,
+        minMessage: 'Le titre doit faire au moins {{ limit }} caractères',
+        maxMessage: 'Le titre ne doit pas faire plus de {{ limit }} caractères'
+    )]
     private $name;
 
     #[ORM\Column(type: 'text')]
@@ -30,6 +38,7 @@ class Products
     private $price;
 
     #[ORM\Column(type: 'integer')]
+    #[Assert\PositiveOrZero(message: 'Le stock ne peut pas être négatif')]
     private $stock;
 
     #[ORM\ManyToOne(targetEntity: Categories::class, inversedBy: 'products')]
