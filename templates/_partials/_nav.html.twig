@@ -35,6 +35,11 @@
 			</ul>
 			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 				{% if app.user %}
+                    {% if is_granted('ROLE_PRODUCT_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('admin_index') }}">Administration</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="#">Mon compte</a>
                     </li>

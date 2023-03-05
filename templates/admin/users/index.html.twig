@@ -1,7 +1,62 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Administration des utilisateurs{% endblock %}
+{% block title %}Liste des utilisateurs{% endblock %}
 
 {% block body %}
-    <h1>Administration des utilisateurs</h1>
+    <div class="container">
+        <div class="row">
+            {% include "_partials/_adminnav.html.twig" %}
+            <main class="col-9 border border-light bg-white p-2">
+                <h1>Liste des utilisateurs</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Prénom</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Rôles</th>
+                            <th>Vérifié</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.firstname }}</td>
+                                <td>{{ user.lastname }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>
+                                    {% for role in user.roles %}
+                                        {% if role == "ROLE_ADMIN" %}
+                                            {% set name = "Administrateur" %}
+                                            {% set color = "danger" %}
+                                        {% elseif role == "ROLE_PRODUCT_ADMIN" %}
+                                            {% set name = "Admin produits" %}
+                                            {% set color = "warning" %}
+                                        {% else %}
+                                            {% set name = "Membre" %}
+                                            {% set color = "success" %}
+                                        {% endif %}
+                                        <span class="badge bg-{{ color }}">{{ name }}</span>
+                                    {% endfor %}
+                                    
+                                </td>
+                                <td>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="switch{{ user.id }}" {{ user.isVerified ? "checked" : "" }} disabled>
+                                        <label class="form-check-label" for="switch{{ user.id }}"></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-success">Modifier</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </main>
+        </div>
+    </div>
 {% endblock %}
