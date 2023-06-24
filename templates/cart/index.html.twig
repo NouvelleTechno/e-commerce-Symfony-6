@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="container">
+        <section class="row">
+            <div class="col-12">
+                <h1>Panier</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Produit</th>
+                            <th>Prix</th>
+                            <th>Quantité</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for element in data %}
+                            <tr>
+                                <td>{{ element.product.name }}</td>
+                                <td>{{ element.product.price / 100 }} €</td>
+                                <td>{{ element.quantity }}</td>
+                                <td>{{ element.quantity * element.product.price / 100 }} €</td>
+                                <td>
+                                    <a href="{{ path('cart_add', {id: element.product.id}) }}" class="btn btn-success">+</a>
+                                    <a href="{{ path('cart_remove', {id: element.product.id}) }}" class="btn btn-warning">-</a>
+                                    <a href="{{ path('cart_delete', {id: element.product.id}) }}" class="btn btn-danger">Supprimer</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5">Votre panier est vide</td>
+                            </tr>    
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">Total</td>
+                            <td>{{ total / 100 }} €</td>
+                            <td>
+                                <a href="{{ path('cart_empty') }}" class="btn btn-danger">Vider</a>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </section>
+    </main>
+{% endblock %}

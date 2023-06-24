@@ -39,7 +39,7 @@
                 <p>Catégorie : {{ product.categories.name }}</p>
                 <p>Prix : {{ product.price / 100 }} €</p>
                 {% if product.stock > 0 %}
-                    <a href="#" class="btn btn-success">Ajouter au panier</a>
+                    <a href="{{ path('cart_add', {id: product.id}) }}" class="btn btn-success">Ajouter au panier</a>
                 {% else %}
                     <p class="text-danger">Temporairement en rupture de stock</p>
                 {% endif %}
